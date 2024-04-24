@@ -160,6 +160,7 @@ If the user requests purchasing a stock, call \`show_stock_purchase_ui\` to show
 If the user just wants the price, call \`show_stock_price\` to show the price.
 If you want to show trending stocks, call \`list_stocks\`.
 If you want to show events, call \`get_events\`.
+If the user wants to see the current itinerary, call \`show_itinerary\` to show the itinerary UI.
 If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
 
 Besides that, you can also chat with users and do some calculations if needed.`
@@ -334,6 +335,73 @@ Besides that, you can also chat with users and do some calculations if needed.`
                   numberOfShares,
                   symbol,
                   price: +price,
+                  status: 'requires_action'
+                }}
+              />
+            </BotCard>
+          )
+        }
+      },
+      showItinerary: {
+        description:
+          'Show current itinerary UI. Use this if the user wants to see the current itinerary.',
+        parameters: z.object({
+          itinerary: z.array(
+            z.object({
+              city: z.string()
+                .describe('The name of the city for the stop.')
+                .example("New York"),
+              startDate: z.date()
+                .describe('The start date of the stop.')
+                .example(new Date("2023-01-01")),
+              endDate: z.date()
+                .describe('The end date of the stop.')
+                .example(new Date("2023-01-05")),
+              accommodation: z.string()
+                .optional()
+                .describe('The name of the accommodation, if applicable (optional).')
+                .example("Hotel Central"),
+            }).describe('A single stop in the travel itinerary including city, dates, and optional accommodation.')
+          )
+          .describe('An array of all the stops in the travel itinerary.'),
+        }),
+        render: async function* ({ itinerary }) {
+          if (!itinerary) {
+            aiState.done({
+              ...aiState.get(),
+              messages: [
+                ...aiState.get().messages,
+                {
+                  id: nanoid(),
+                  role: 'system',
+                  content: `[There's no itinerary to show]`
+                }
+              ]
+            })
+
+            return <BotMessage content={'Invalid itinerary'} />
+          }
+
+          aiState.done({
+            ...aiState.get(),
+            messages: [
+              ...aiState.get().messages,
+              {
+                id: nanoid(),
+                role: 'function',
+                name: 'showItinerary',
+                content: JSON.stringify({
+                  itinerary
+                })
+              }
+            ]
+          })
+
+          return (
+            <BotCard>
+              <Itinerary
+                props={{
+                  itinerary,
                   status: 'requires_action'
                 }}
               />
