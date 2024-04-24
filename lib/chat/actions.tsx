@@ -122,7 +122,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
-async function updateItinerary({itinerary, title}) {
+async function updateItinerary(itinerary: any, title: any) {
   'use server'
 
   const aiState = getMutableAIState<typeof AI>()

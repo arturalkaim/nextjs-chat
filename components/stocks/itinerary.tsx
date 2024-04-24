@@ -46,7 +46,7 @@ export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps})
       return stop;
     });
 
-    updateItinerary({itinerary: updatedItinerary, title: title}); // Assuming this action triggers a backend update or similar
+    updateItinerary(updatedItinerary, title); // Assuming this action triggers a backend update or similar
   }
 
   return (
