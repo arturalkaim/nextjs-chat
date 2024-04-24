@@ -12,6 +12,7 @@ interface Stop {
 
 interface ItineraryProps {
   itinerary: Stop[];
+  title: string;
 }
 
 export function Itinerary({ itinerary }: ItineraryProps) {
@@ -50,7 +51,7 @@ export function Itinerary({ itinerary }: ItineraryProps) {
 
   return (
     <div className="rounded-xl border bg-zinc-950 p-4 text-green-400">
-      <div className="text-lg text-zinc-300">Travel Itinerary</div>
+      <div className="text-lg text-zinc-300">{itinerary.title}</div>
       {itinerary.map((stop, index) => (
         <div key={index} className="mt-4 p-2">
           <div className="text-xl font-bold">{stop.city}</div>

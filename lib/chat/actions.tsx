@@ -379,6 +379,8 @@ Besides that, you can also chat with users and do some calculations if needed.`
             }).describe('A single stop in the travel itinerary including city, dates, and optional accommodation.')
           )
           .describe('An array of all the stops in the travel itinerary.'),
+          title: z.string()
+            .describe('The title of the itinerary. e.g., "Summer in Europe"'),
         }),
         render: async function* ({ itinerary }) {
           if (!itinerary) {
