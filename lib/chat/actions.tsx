@@ -130,7 +130,7 @@ async function updateItinerary(itinerary: any, title: any) {
   aiState.done({
     ...aiState.get(),
     messages: [
-      ...aiState.get().messages.slice(0, -1),
+      ...aiState.get().messages,
       {
         id: nanoid(),
         role: 'system',
