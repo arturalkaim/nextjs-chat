@@ -122,6 +122,23 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
+async function updateItinerary(itinerary :any) {
+  'use server'
+
+  const aiState = getMutableAIState<typeof AI>()
+
+  aiState.update({
+    ...aiState.get(),
+    itinerary
+  })
+
+  return {
+    id: nanoid(),
+    display: <Itinerary itinerary={itinerary} />
+  }
+
+}
+
 async function submitUserMessage(content: string) {
   'use server'
 
