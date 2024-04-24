@@ -1,4 +1,5 @@
 'use client'
+import type { AI } from '@/lib/chat/actions'
 
 import { useAIState, useActions, useUIState } from 'ai/rsc';
 import { format, addDays, differenceInCalendarDays } from 'date-fns';
@@ -17,7 +18,7 @@ interface ItineraryProps {
 
 export function Itinerary({ itinerary }: ItineraryProps) {
 
-  const { aiState, setAIState } = useAIState();
+  const [aiState, setAIState] = useAIState<typeof AI>()
   const { updateItinerary } = useActions(); // Assuming useActions provides an appropriate method
   const [, setMessages] = useUIState(); // Assuming this sets UI-related messages
 
