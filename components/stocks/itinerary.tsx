@@ -53,17 +53,21 @@ export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps})
     <div className="rounded-xl border bg-zinc-950 p-4 text-green-400">
       <div className="text-lg text-zinc-300">{title}</div>
       {itinerary.map((stop, index) => (
-        <div key={index} className="mt-4 p-2">
-          <div className="text-xl font-bold">{stop.city}</div>
-          <div className="text-sm">
-            {format(stop.startDate, 'MMM dd, yyyy')} - {format(stop.endDate, 'MMM dd, yyyy')}
-            ({differenceInCalendarDays(stop.endDate, stop.startDate)} nights)
+        <div key={index} className="mt-4 p-2 flex justify-between">
+          <div>
+            <div className="text-xl font-bold">{stop.city}</div>
+            <div className="text-sm">
+              {format(stop.startDate, 'MMM dd, yyyy')} - {format(stop.endDate, 'MMM dd, yyyy')}
+              ({differenceInCalendarDays(stop.endDate, stop.startDate)} nights)
+            </div>
+            {stop.accommodation && (
+              <div className="text-sm italic">Staying at: {stop.accommodation}</div>
+            )}
           </div>
-          <button className="mx-2" onClick={() => changeDuration(index, false)}>-</button>
-          <button className="mx-2" onClick={() => changeDuration(index, true)}>+</button>
-          {stop.accommodation && (
-            <div className="text-sm italic">Staying at: {stop.accommodation}</div>
-          )}
+          <div className="flex flex-col gap-2">
+            <button className="rounded bg-red-500 px-2 py-1 text-white" onClick={() => changeDuration(index, false)}>-</button>
+            <button className="rounded bg-green-500 px-2 py-1 text-white" onClick={() => changeDuration(index, true)}>+</button>
+          </div>
         </div>
       ))}
     </div>
