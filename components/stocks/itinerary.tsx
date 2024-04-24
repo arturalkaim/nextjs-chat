@@ -16,14 +16,13 @@ interface ItineraryProps {
   title: string;
 }
 
-export function Itinerary({ itinerary }: ItineraryProps) {
+export function Itinerary({ itinerary, title }: ItineraryProps) {
 
-  const [aiState, setAIState] = useAIState<typeof AI>()
   const { updateItinerary } = useActions(); // Assuming useActions provides an appropriate method
   const [, setMessages] = useUIState(); // Assuming this sets UI-related messages
 
   function changeDuration(index: number, increment: boolean) {
-    const updatedItinerary = aiState.itinerary.map((stop, idx) => {
+    const updatedItinerary = itinerary.map((stop, idx) => {
       if (idx === index) {
         const newEndDate = increment ? addDays(stop.endDate, 1) : addDays(stop.endDate, -1);
         const numNights = differenceInCalendarDays(newEndDate, stop.startDate);
@@ -52,7 +51,7 @@ export function Itinerary({ itinerary }: ItineraryProps) {
 
   return (
     <div className="rounded-xl border bg-zinc-950 p-4 text-green-400">
-      <div className="text-lg text-zinc-300">{itinerary.title}</div>
+      <div className="text-lg text-zinc-300">{title}</div>
       {itinerary.map((stop, index) => (
         <div key={index} className="mt-4 p-2">
           <div className="text-xl font-bold">{stop.city}</div>
