@@ -1,6 +1,6 @@
 'use client'
 import type { AI } from '@/lib/chat/actions'
-
+import { useState } from 'react'
 import { useAIState, useActions, useUIState } from 'ai/rsc';
 import { format, addDays, differenceInCalendarDays } from 'date-fns';
 
@@ -20,9 +20,10 @@ export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps})
 
   const { updateItinerary } = useActions(); // Assuming useActions provides an appropriate method
   const [, setMessages] = useUIState(); // Assuming this sets UI-related messages
+  const [it, setItinerary] = useState<Stop[]>(itinerary);
 
   function changeDuration(index: number, increment: boolean) {
-    const updatedItinerary = itinerary.map((stop, idx) => {
+    const updatedItinerary = it.map((stop, idx) => {
       if (idx === index) {
         const newEndDate = increment ? addDays(stop.endDate, 1) : addDays(stop.endDate, -1);
         const numNights = differenceInCalendarDays(newEndDate, stop.startDate);
@@ -47,12 +48,13 @@ export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps})
     });
 
     updateItinerary(updatedItinerary, title); // Assuming this action triggers a backend update or similar
+    setItinerary(updatedItinerary);
   }
 
   return (
     <div className="rounded-xl border bg-zinc-950 p-4 text-green-400">
       <div className="text-lg text-zinc-300">{title}</div>
-      {itinerary.map((stop, index) => (
+      {it.map((stop, index) => (
         <div key={index} className="mt-4 p-2 flex justify-between">
           <div>
             <div className="text-xl font-bold">{stop.city}</div>

@@ -139,11 +139,12 @@ async function updateItinerary(itinerary: any, title: any) {
     ]
   })
 
+
+
   return {
     id: nanoid(),
     display: <Itinerary props={{itinerary, title}} />
   }
-
 }
 
 async function submitUserMessage(content: string) {
