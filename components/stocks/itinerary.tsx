@@ -38,7 +38,7 @@ export function Itinerary({ itinerary, title }: ItineraryProps) {
           };
 
           // Optionally update the UI messages for immediate feedback
-          setMessages(currentMessages => [...currentMessages, message]);
+          setMessages((currentMessages: any) => [...currentMessages, message]);
 
           return updatedStop;
         }
