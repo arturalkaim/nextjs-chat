@@ -16,7 +16,8 @@ import {
   BotMessage,
   SystemMessage,
   Stock,
-  Purchase
+  Purchase,
+  Itinerary
 } from '@/components/stocks'
 
 import { z } from 'zod'
@@ -396,10 +397,7 @@ Besides that, you can also chat with users and do some calculations if needed.`
           return (
             <BotCard>
               <Itinerary
-                props={{
-                  itinerary,
-                  status: 'requires_action'
-                }}
+                itinerary={itinerary}
               />
             </BotCard>
           )

@@ -33,4 +33,11 @@ const Events = dynamic(() => import('./events').then(mod => mod.Events), {
   loading: () => <EventsSkeleton />
 })
 
-export { Stock, Purchase, Stocks, Events }
+const Itinerary = dynamic(() => import('./itinerary').then(mod => mod.Itinerary), {
+  ssr: false,
+  loading: () => (
+    <div className="rounded-xl border bg-zinc-950 p-4 text-green-400 sm:h-[314px]" />
+  )
+})
+
+export { Stock, Purchase, Stocks, Events, Itinerary }
