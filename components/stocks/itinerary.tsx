@@ -11,7 +11,7 @@ interface Stop {
   accommodation?: string;
 }
 
-interface ItineraryProps {
+export interface ItineraryProps {
   itinerary: Stop[];
   title: string;
 }
@@ -46,7 +46,7 @@ export function Itinerary({ itinerary, title }: ItineraryProps) {
       return stop;
     });
 
-    updateItinerary(updatedItinerary); // Assuming this action triggers a backend update or similar
+    updateItinerary({itinerary: updatedItinerary, title: title}); // Assuming this action triggers a backend update or similar
   }
 
   return (

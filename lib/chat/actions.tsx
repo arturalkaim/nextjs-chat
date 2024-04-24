@@ -17,7 +17,8 @@ import {
   SystemMessage,
   Stock,
   Purchase,
-  Itinerary
+  Itinerary,
+  ItineraryProps
 } from '@/components/stocks'
 
 import { z } from 'zod'
@@ -122,14 +123,21 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
-async function updateItinerary(itinerary :any) {
+async function updateItinerary(itinerary : ItineraryProps) {
   'use server'
 
   const aiState = getMutableAIState<typeof AI>()
 
-  aiState.update({
+  aiState.done({
     ...aiState.get(),
-    itinerary
+    messages: [
+      ...aiState.get().messages.slice(0, -1),
+      {
+        id: nanoid(),
+        role: 'system',
+        content: `[User has updated the itinerary]`
+      }
+    ]
   })
 
   return {
@@ -495,7 +503,8 @@ export type UIState = {
 export const AI = createAI<AIState, UIState>({
   actions: {
     submitUserMessage,
-    confirmPurchase
+    confirmPurchase,
+    updateItinerary
   },
   initialUIState: [],
   initialAIState: { chatId: nanoid(), messages: [] },
