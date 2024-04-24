@@ -349,18 +349,14 @@ Besides that, you can also chat with users and do some calculations if needed.`
           itinerary: z.array(
             z.object({
               city: z.string()
-                .describe('The name of the city for the stop.')
-                .example("New York"),
+                .describe('The name of the city for the stop. e.g., Lisbon'),
               startDate: z.date()
-                .describe('The start date of the stop.')
-                .example(new Date("2023-01-01")),
+                .describe('The start date of the stop. e.g., 2023-01-01'),
               endDate: z.date()
-                .describe('The end date of the stop.')
-                .example(new Date("2023-01-05")),
+                .describe('The end date of the stop. e.g., 2023-01-03'),
               accommodation: z.string()
                 .optional()
-                .describe('The name of the accommodation, if applicable (optional).')
-                .example("Hotel Central"),
+                .describe('The name of the accommodation, if applicable (optional). e.g., Hilton'),
             }).describe('A single stop in the travel itinerary including city, dates, and optional accommodation.')
           )
           .describe('An array of all the stops in the travel itinerary.'),
