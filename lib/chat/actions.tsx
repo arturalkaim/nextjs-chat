@@ -17,8 +17,7 @@ import {
   SystemMessage,
   Stock,
   Purchase,
-  Itinerary,
-  ItineraryProps
+  Itinerary
 } from '@/components/stocks'
 
 import { z } from 'zod'
@@ -123,7 +122,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
-async function updateItinerary(itinerary : ItineraryProps) {
+async function updateItinerary({itinerary, title}) {
   'use server'
 
   const aiState = getMutableAIState<typeof AI>()
@@ -142,7 +141,7 @@ async function updateItinerary(itinerary : ItineraryProps) {
 
   return {
     id: nanoid(),
-    display: <Itinerary itinerary={itinerary} />
+    display: <Itinerary props={{itinerary, title}} />
   }
 
 }
@@ -390,7 +389,7 @@ Besides that, you can also chat with users and do some calculations if needed.`
           title: z.string()
             .describe('The title of the itinerary. e.g., "Summer in Europe"'),
         }),
-        render: async function* ({ itinerary }) {
+        render: async function* ({ itinerary, title }) {
           if (!itinerary) {
             aiState.done({
               ...aiState.get(),
@@ -425,7 +424,7 @@ Besides that, you can also chat with users and do some calculations if needed.`
           return (
             <BotCard>
               <Itinerary
-                itinerary={itinerary}
+                props={{itinerary, title}}
               />
             </BotCard>
           )
@@ -580,7 +579,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
             </BotCard>
           ) : message.name === 'showItinerary' ? (
             <BotCard>
-              <Itinerary itinerary={JSON.parse(message.content).itinerary} />
+              <Itinerary props={JSON.parse(message.content)} />
             </BotCard>
           ) : null
         ) : message.role === 'user' ? (

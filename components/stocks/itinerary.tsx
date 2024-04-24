@@ -16,7 +16,7 @@ export interface ItineraryProps {
   title: string;
 }
 
-export function Itinerary({ itinerary, title }: ItineraryProps) {
+export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps}) {
 
   const { updateItinerary } = useActions(); // Assuming useActions provides an appropriate method
   const [, setMessages] = useUIState(); // Assuming this sets UI-related messages
