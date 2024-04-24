@@ -162,6 +162,7 @@ If the user just wants the price, call \`show_stock_price\` to show the price.
 If you want to show trending stocks, call \`list_stocks\`.
 If you want to show events, call \`get_events\`.
 If the user wants to see the current itinerary, call \`show_itinerary\` to show the itinerary UI.
+If you want present any itinerary, call \`show_itinerary\` to show the itinerary UI, don't write it down.
 If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
 
 Besides that, you can also chat with users and do some calculations if needed.`
@@ -527,7 +528,9 @@ export const AI = createAI<AIState, UIState>({
 export const getUIStateFromAIState = (aiState: Chat) => {
   return aiState.messages
     .filter(message => message.role !== 'system')
-    .map((message, index) => ({
+    .map((message, index) => {
+      console.log("getUIStateFromAIState message", message, index)
+      return {
       id: `${aiState.chatId}-${index}`,
       display:
         message.role === 'function' ? (
@@ -547,11 +550,16 @@ export const getUIStateFromAIState = (aiState: Chat) => {
             <BotCard>
               <Events props={JSON.parse(message.content)} />
             </BotCard>
+          ) : message.name === 'showItinerary' ? (
+            <BotCard>
+              <Itinerary itinerary={JSON.parse(message.content).itinerary} />
+            </BotCard>
           ) : null
         ) : message.role === 'user' ? (
           <UserMessage>{message.content}</UserMessage>
         ) : (
           <BotMessage content={message.content} />
         )
-    }))
+    }
+  })
 }
