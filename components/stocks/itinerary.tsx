@@ -9,7 +9,6 @@ interface Stop {
   startDate: Date;
   endDate: Date;
   accommodation?: string;
-  imageUrl: string; // Add this line
 }
 
 export interface ItineraryProps {
@@ -59,7 +58,6 @@ export function Itinerary({props: {itinerary, title }}: {props: ItineraryProps})
         <div key={index} className="mt-4 p-2 flex justify-between">
           <div>
             <div className="text-xl font-bold">{stop.city}</div>
-            <img src={stop.imageUrl} alt={`${stop.city}`} className="w-full h-auto rounded my-2"/>
             <div className="text-sm">
               {format(stop.startDate, 'MMM dd, yyyy')} - {format(stop.endDate, 'MMM dd, yyyy')}
               ({differenceInCalendarDays(stop.endDate, stop.startDate)} nights)

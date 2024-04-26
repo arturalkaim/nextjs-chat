@@ -125,6 +125,29 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function updateItinerary(itinerary: any, title: any) {
   'use server'
 
+  await sleep(1000)
+
+  const purchasing = createStreamableUI(
+    <div className="inline-flex items-start gap-1 md:items-center">
+      {spinner}
+      <p className="mb-2">
+        Updating itinerary... working on it...
+      </p>
+    </div>
+  )
+
+
+  purchasing.update(
+    <div className="inline-flex items-start gap-1 md:items-center">
+      {spinner}
+      <p className="mb-2">
+        Updating itinerary... working on it...
+      </p>
+    </div>
+  )
+
+  await sleep(1000)
+
   const aiState = getMutableAIState<typeof AI>()
 
   aiState.done({
@@ -384,8 +407,6 @@ Besides that, you can also chat with users and do some calculations if needed.`
               accommodation: z.string()
                 .optional()
                 .describe('The name of the accommodation, if applicable (optional). e.g., Hilton'),
-                imageUrl: z.string()
-                .describe('A url to an image of the city'),
             }).describe('A single stop in the travel itinerary including city, dates, and optional accommodation.')
           )
           .describe('An array of all the stops in the travel itinerary.'),
