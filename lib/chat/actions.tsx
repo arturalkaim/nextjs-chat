@@ -125,7 +125,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function updateItinerary(itinerary: any, title: any) {
   'use server'
 
-  await sleep(1000)
+  await sleep(4000)
 
   const purchasing = createStreamableUI(
     <div className="inline-flex items-start gap-1 md:items-center">
@@ -146,7 +146,7 @@ async function updateItinerary(itinerary: any, title: any) {
     </div>
   )
 
-  await sleep(1000)
+  await sleep(4000)
 
   const aiState = getMutableAIState<typeof AI>()
 
