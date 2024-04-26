@@ -384,6 +384,8 @@ Besides that, you can also chat with users and do some calculations if needed.`
               accommodation: z.string()
                 .optional()
                 .describe('The name of the accommodation, if applicable (optional). e.g., Hilton'),
+                imageUrl: z.string()
+                .describe('A url to an image of the city'),
             }).describe('A single stop in the travel itinerary including city, dates, and optional accommodation.')
           )
           .describe('An array of all the stops in the travel itinerary.'),
